@@ -1,0 +1,33 @@
+# ===========================
+# PG OS — Standalone Local Profile (H2 In-Memory)
+# ===========================
+
+spring:
+  # Database (H2 In-Memory)
+  datasource:
+    url: jdbc:h2:mem:pgos_dev;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  # H2 Console (available at http://localhost:8080/h2-console)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # JPA
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  # Flyway disabled for local quick run (H2 handles DDL)
+  flyway:
+    enabled: false
+
+# Logging
+logging:
+  level:
+    com.pgos: DEBUG
+    org.springframework.web: INFO

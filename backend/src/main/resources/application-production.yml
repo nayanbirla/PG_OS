@@ -1,0 +1,49 @@
+# ===========================
+# PG OS — Production Profile
+# ===========================
+
+spring:
+  # Database (Neon PostgreSQL)
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 20000
+
+  # Redis (Upstash)
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+      password: ${SPRING_DATA_REDIS_PASSWORD}
+      ssl:
+        enabled: true
+
+  # JPA — no SQL logging in prod
+  jpa:
+    show-sql: false
+
+  # Flyway
+  flyway:
+    clean-disabled: true
+
+  # Lazy init for faster cold starts (Render free tier)
+  main:
+    lazy-initialization: true
+
+# Logging — minimal in prod
+logging:
+  level:
+    com.pgos: INFO
+    org.springframework: WARN
+    org.hibernate: WARN
+
+# Actuator — restrict in prod
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
